@@ -12,7 +12,7 @@
         $url = 'http://api.geonames.org/postalCodeCountryInfoJSON?formatted=true&username=tamukabungwe&style=full';
         break;
       case 'api2':
-        $url = 'http://api.geonames.org/findNearbyStreetsJSON?formatted=true&lat=' . urlencode($_POST['lat']) . '&lng=' . urlencode($_POST['lng']) . '&username=tamukabungwe&style=full';
+        $url = 'http://api.geonames.org/findNearbyStreetsJSON?formatted=true&lat=37.451&lng=-122.18&username=tamukabungwe&style=full';
         break;
       case 'api3':
         $url = 'http://api.geonames.org/timezoneJSON?formatted=true&lat=47.01&lng=10.2&username=tamukabungwe&style=full';
