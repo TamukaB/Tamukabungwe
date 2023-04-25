@@ -6,43 +6,7 @@
 	<title>HTML Application</title>
 	<meta name="description" content="HTML application">
 	<meta name="author" content="Tamuka Bungwe">
-	<style>
-		table {
-			font-family: Arial, Helvetica, sans-serif;
-			border-collapse: collapse;
-			width: 100%;
-		}
-
-		table td,
-		table th {
-			border: 1px solid #ddd;
-			padding: 8px;
-		}
-
-		table tr:nth-child(even) {
-			background-color: #f2f2f2;
-		}
-
-		table tr:hover {
-			background-color: #ddd;
-		}
-
-		table th {
-			padding-top: 12px;
-			padding-bottom: 12px;
-			text-align: left;
-			background-color: #5a5a5a;
-			color: white;
-		}
-
-		.mt-20 {
-			margin-top: 20px;
-		}
-
-		.h-color {
-			color: #5a5a5a;
-		}
-	</style>
+	<link  rel="stylesheet"href="Libs/js/css/styles.css" />
 </head>
 
 <body>
@@ -52,16 +16,14 @@
 				<th>API Name</th>
 				<th>API Description</th>
 				<th>User Inputs</th>
-				<th align="right">Submit:</th>
+				<th align = "right">Submit:</th>
 			</tr>
 			<tr>
 				<td>Nearby Streets API</td>
 				<td>Retrieves nearby streets in Menlo Park</td>
 				<td>
-					<label for="location">Location:</label>
-					<id="txtCity">
-						<option value="Menlo Park">Menlo Park</option>
-					</select>
+					<input type="number" id="findnearbystreetsLat" value="37.451" />
+					<input type="number" id="findnearbystreetsLng" value="122.18" />
 				</td>
 				<td>
 					<button id="btnRun1">Submit</button>
@@ -71,10 +33,8 @@
 				<td>Timezone API</td>
 				<td>Retrieves the timezone for Austria</td>
 				<td>
-					<label for="location">Location:</label>
-					<id="txtCountry">
-						<option value="Austria">Austria</option>
-					</select>
+					<input type="number" id="timezoneLat" value="47.01" />
+					<input type="number" id="timezoneLng" value="10.2" />
 				</td>
 				<td>
 					<button id="btnRun2">Submit</button>
@@ -131,7 +91,7 @@
 	</div>
 	<script src="https://code.jquery.com/jquery-3.6.4.min.js"
 		integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-	<script type="application/javascript" src="./Libs/js/script.js"></script>
+	<script type="application/javascript" src="Libs/js/script.js"></script>
 </body>
 
 </html>

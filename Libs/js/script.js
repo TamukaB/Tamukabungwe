@@ -4,19 +4,19 @@ $(document).ready(function() {
 
 $('#btnRun1').click(function() {
     $.ajax({
-        url: 'api/api.php',
+        url: 'api/findnearbystreets.php',
         type: 'POST',
         dataType: 'json',
         data: {
-            api: 'api2',
-            username: 'tamukabungwe'
+            lat:$("#findnearbystreetsLat").val(),
+            lng:$("#findnearbystreetsLng").val(),
         },
         success: function(result) {
             console.log(result);
             if (result.status.name == "ok") {
                 var rows = ``;
                 for (var i = 0 ; i < result.data.streetSegment.length; i++) {
-                    rows += `
+                    rows = `
                     <tr> 
                         <td>${result.data.streetSegment[i].placename}</td>
                         <td>${result.data.streetSegment[i].postalcode}</td>
@@ -36,18 +36,19 @@ $('#btnRun1').click(function() {
         },
         error: function(jqxhr, textstatus, errorThrown) {
             // Your error code
+            console.log(jqxhr);
         }
     });
 });
 
 $('#btnRun2').click(function() {
     $.ajax({
-        url: 'api/api.php',
+        url: 'api/timezone.php',
         type: 'POST',
         dataType: 'json',
         data: {
-            api: 'api3',
-            username: 'tamukabungwe'
+            lat:$("#timezoneLat").val(),
+            lng:$("#timezoneLng").val(),
         },
         success: function(result) {
             console.log(result);
@@ -74,13 +75,14 @@ $('#btnRun2').click(function() {
         },
         error: function(jqxhr, textstatus, errorThrown) {
             // Your error code
+            console.log(jqxhr);
         }
     });
 });
 
 $('#btnRun3').click(function() {
     $.ajax({
-        url: 'api/api.php',
+        url: 'api/postalcodecountry.php',
         type: 'POST',
         dataType: 'json',
         data: {
@@ -113,6 +115,7 @@ $('#btnRun3').click(function() {
         },
         error: function(jqxhr, textstatus, errorThrown) {
             // Your error code
+            console.log(jqxhr);
         }
     });
 });
