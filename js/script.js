@@ -13078,13 +13078,6 @@ $(document).ready(function (e) {
     }
   }).addTo(map);
 
-  var populationButton = L.easyButton("fa-users", function (btn, map) {
-    if (selectedCountryData) {
-      fetchCountryDetails(selectedCountryData.iso_a2);
-      $("#detailsmodal_1").modal("show");
-    }
-  }).addTo(map);
-
   var weatherButton = L.easyButton({
     states: [
       {
@@ -13121,22 +13114,7 @@ $(document).ready(function (e) {
           $("#detailsmodal_3").modal("show");
         }
       }).addTo(map);
-  var languageButton = L.easyButton(
-      "fa-solid fa-circle-info",
-      function (btn, map) {
-        if (selectedCountryData) {
-          fetchCountryDetails(selectedCountryData.iso_a2);
-          $("#languageModal").modal("show");
-        }
-      }).addTo(map);
-  var regionButton = L.easyButton(
-      "fa-solid fa-globe",
-      function (btn, map) {
-        if (selectedCountryData) {
-          fetchCountryDetails(selectedCountryData.iso_a2);
-          $("#regionModal").modal("show");
-        }
-      }).addTo(map);
+
 
   function customTip() {
     this.unbindTooltip();
@@ -13189,7 +13167,7 @@ $(document).ready(function (e) {
             var resultCode = result.status.code
 
             if (resultCode == 200) {
-
+              getWidipedia(data[0].name.common);
               var d = result.data;
 
               $('#weatherModalLabel').html(d.location + ", " + d.country);
@@ -13226,30 +13204,22 @@ $(document).ready(function (e) {
             $(".population").html(data[0].population.toLocaleString());
             $(".timezone").html(data[0].timezones[0]);
             $(".currency").html(Object.keys(data[0].currencies));
-            $(".earthquake").html('<a target="_blank" href = "https://earthquake.usgs.gov/earthquakes/map/?extent=-70.37785,-131.83594&extent=81.36129,318.16406&timeZone=utc">Link</a>');
             $('.region').html(data[0].region);
             var langs = data[0].languages;
 
-            let count = 0;
-            let languages = '';
-            // loop through each key/value
-            for (let key in langs) {
-              // increase the count
-              languages += data[0].languages[Object.keys(data[0].languages)[count]] + ', ';
-              count++;
-            }
-            $('.language').html(languages);
+            let languages = Object.values(langs).join(', '); // Join the language values with commas
+$('.language').html(languages);
+
+
+
 
             $(".link").html(
-                '<a target="_blank" href="https://en.wikipedia.org/wiki/' +
-                data[0].name.common +
-                '">' +
-                data[0].name.common +
-                "</a>"
+                // '<a target="_blank" href="https://en.wikipedia.org/wiki/' +
+                // data[0].name.common +
+                // '">' +
+                // data[0].name.common +
+                // "</a>"
             );
-            $(".healthdata").html('<a target="_blank" href = "https://www.healthdata.org/' +
-                data[0].name.common +
-                '">Link</a>');
 
             $.ajax({
               type: "POST",
@@ -13287,7 +13257,31 @@ $(document).ready(function (e) {
       },
     });
   }
+  function getWidipedia(country){
+    var settings = {
+      "url": "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro&explaintext&redirects=1&titles="+country,
+      "method": "GET",
+      "timeout": 0,
+      dataType: 'jsonp',
+      cors: true ,
+      contentType:'application/json',
+      secure: true,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader ("Authorization", "Basic " + btoa(""));
+      },
+    };
 
+    $.ajax(settings).done(function (response) {
+
+
+      var Newkey = Object.keys(response.query.pages)[0];
+      $(".link").html(`<a target="_blank" href="https://en.wikipedia.org/wiki/` +country+`">`
+          +(response.query.pages[Newkey].extract).substr(0, 300) + `...`+`</a>`);
+    });
+  }
   function getCountries(selectedCountry) {
     var select = $("#country-select");
     select.empty();
