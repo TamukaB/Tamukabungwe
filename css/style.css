@@ -1,0 +1,48 @@
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(rgb(255, 156, 255), rgb(92, 92, 155));
+    border-radius: 15px;
+}
+::-webkit-scrollbar:hover {
+    width: 20px;
+}
+
+.dataTables_wrapper {
+    padding: 20px !important;
+}
+
+body{
+    zoom: 90% !important;
+}
+.offcanvas-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 165vw !important;
+    height: 159vh !important;
+    background-color: #000;
+}
+.modal-backdrop {
+    --bs-backdrop-zindex: 1050;
+    --bs-backdrop-bg: #000;
+    --bs-backdrop-opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: var(--bs-backdrop-zindex);
+    width: 139vw !important;
+    height: 150vh !important;
+    background-color: var(--bs-backdrop-bg);
+}
