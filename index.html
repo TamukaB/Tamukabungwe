@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Directory</title>
+    <link rel="icon" type="image/x-icon" href="./libs/libs/images/logo.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="./libs/css/style.css">
+</head>
+
+<body>
+    <section>
+
+        <div class="appHeader">
+
+            <div class="row">
+
+                <div class="col">
+                    <input id="searchInp" class="form-control mb-3" placeholder="search">
+                </div>
+
+                <div class="col-6 text-end me-2">
+
+                    <div class="btn-group" role="group" aria-label="buttons">
+
+                        <button id="refreshBtn" type="button" class="btn btn-primary">
+                            <i class="fa-solid fa-refresh fa-fw"></i>
+                        </button>
+                        <!-- <button id="filterBtn" type="button" class="btn btn-primary">
+                            <i class="fa-solid fa-filter fa-fw"></i>
+                        </button> -->
+                        <button id="addBtn" type="button" class="btn btn-primary" type="button"
+                            data-bs-toggle="offcanvas" data-bs-target="#addRecordModal"
+                            aria-controls="staticBackdropOff">
+                            <i class="fa-solid fa-plus fa-fw"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="personnelBtn" data-bs-toggle="tab"
+                        data-bs-target="#personnel-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
+                        aria-selected="true">
+                        <i class="fa-solid fa-person fa-lg fa-fw"></i><span class="d-none d-sm-block">Personnel</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="departmentsBtn" data-bs-toggle="tab"
+                        data-bs-target="#departments-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane"
+                        aria-selected="false">
+                        <i class="fa-solid fa-building fa-lg fa-fw"></i><span
+                            class="d-none d-sm-block">Departments</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="locationsBtn" data-bs-toggle="tab" data-bs-target="#locations-tab-pane"
+                        type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+                        <i class="fa-solid fa-map-location-dot fa-lg fa-fw"></i><span
+                            class="d-none d-sm-block">Locations</span>
+                    </button>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="tab-content bg-white">
+
+            <div class="tab-pane show active" id="personnel-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                <table class="table table-hover" id="personalTable">
+                </table>
+            </div>
+
+            <div class="tab-pane" id="departments-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <table class="table table-hover" id="departmentTable">
+
+                </table>
+            </div>
+
+            <div class="tab-pane" id="locations-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                <table class="table table-hover" id="locationTable">
+
+                </table>
+            </div>
+
+        </div>
+
+        <footer class="border-top text-center fw-bold">
+
+            <p class="fw-light my-3">Company Directory version 1.0</p>
+
+        </footer>
+
+        <!-- Modals -->
+
+        <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="addRecordModal"
+            aria-labelledby="staticBackdropLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="staticBackdropLabel">Add Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="d-flex flex-column">
+                    <hr>
+                    <details>
+                        <summary>Personal Information</summary>
+                        <div class="d-flex justify-content-center">
+                            <form action="./libs/php/personal.php" class="w-50 p-3" method="post">
+                                <input type="text" name="perid" value="0" hidden>
+                                <div class="form-group">
+                                    <label>First name</label>
+                                    <input type="text" required class="form-control" name="fname"
+                                        aria-describedby="emailHelp">
+                                </div>
+                                <div class="form-group">
+                                    <label>Last name</label>
+                                    <input type="text" required name="lname" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Department</label>
+                                    <select required name="department" id="addinfo-department" class="form-select">
+                                    </select>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <label>Location</label>
+                                    <select required name="location" id="addinfo-location" class="form-select">
+                                    </select>
+                                </div> -->
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input required type="email" name="email" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                            </form>
+                        </div>
+                    </details>
+                    <hr>
+                    <details>
+                        <summary>Department Information</summary>
+                        <div class="d-flex justify-content-center">
+                            <form action="./libs/php/department.php" class="w-50 p-3" method="post">
+                                <input type="text" name="depid" value="0" hidden>
+                                <div class="form-group">
+                                    <label>Department name</label>
+                                    <input type="text" class="form-control" aria-describedby="emailHelp" name="name"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Location</label>
+                                    <select required name="location" id="adddepartment-location" class="form-select">
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn mt-3 btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </details>
+                    <hr>
+                    <details>
+                        <summary>Location Information</summary>
+                        <div class="d-flex justify-content-center">
+                            <form action="./libs/php/location.php" class="w-50 p-3" method="post">
+                                <input type="text" name="locid" value="0" hidden>
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input type="text" name="city" required class="form-control" i
+                                        aria-describedby="emailHelp">
+                                </div>
+                                <button type="submit" class="btn mt-3 btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </details>
+                    <hr>
+                    <small id="emailHelp" class="form-text text-center text-muted">We'll never share your information
+                        with
+                        anyone
+                        else.</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editPersonalModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Personal Information</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form action="./libs/php/personal.php" class="p-3" method="post">
+                        <div class="modal-body">
+                            <input type="text" id="pid" name="perid" hidden>
+                            <div class="form-group">
+                                <label>First name</label>
+                                <input type="text" id="fname" required class="form-control" name="fname"
+                                    aria-describedby="emailHelp">
+
+                            </div>
+                            <div class="form-group">
+                                <label>Last name</label>
+                                <input type="text" required id="lname" name="lname" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Department</label>
+                                <select required name="department" id="personal-department" class="form-select">
+                                </select>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label>Location</label>
+                                <select required name="location" id="personal-location" class="form-select">
+                                </select>
+                            </div> -->
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input required type="email" name="email" id="email" class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="updateDepartmentModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Department Information</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="./libs/php/department.php" class="p-3" method="post">
+                        <div class="modal-body">
+                            <input type="text" id="did" name="depid" hidden>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" id="name" required class="form-control" name="name"
+                                    aria-describedby="emailHelp">
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <select required name="location" id="location-department" class="form-select">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="updateLocationModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Location Information</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="./libs/php/location.php" class="p-3" method="post">
+                        <div class="modal-body">
+                            <input type="text" id="lid" name="locid" hidden>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" required class="form-control" id="loccity" name="city"
+                                    aria-describedby="emailHelp">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deletePersonalModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Memeber</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="./libs/php/delPersonal.php" method="post">
+                        <div class="modal-body">
+                            <p>Are you sure...!</p>
+                            <input type="text" hidden class="form-control" name="pdelid" id="pdelid">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="SUBMIT" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deleteDepartmentModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Department</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="./libs/php/delDepartment.php" method="post">
+                        <div class="modal-body">
+                            <p>Are you sure...!</p>
+                            <input type="text" class="form-control" hidden name="Ddelid" id="Ddelid">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="SUBMIT" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="deleteLocationModal" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Location</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form action="./libs/php/delLocation.php" method="post">
+                        <div class="modal-body">
+                            <p>Are you sure...!</p>
+                            <input type="text" class="form-control" hidden name="Ldelid" id="Ldelid">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="SUBMIT" class="btn btn-danger">Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/js/bootstrap.min.js"></script>
+<script src="./libs/js/script.js"></script>
+
+</html>
