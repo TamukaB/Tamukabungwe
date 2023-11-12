@@ -1,10 +1,11 @@
 <?php
+
 // Include your database connection code here
 include_once("../includes/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['locationId'])) {
-        $locationId = $_POST['locationId'];
+        $locationId = mysqli_real_escape_string($connection, $_POST['locationId']); // Sanitize the input
 
         // Perform a SQL query to count departments in the specified location
         $query = "SELECT COUNT(id) AS departmentCount FROM departments WHERE location_id = $locationId";
