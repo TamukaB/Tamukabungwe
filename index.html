@@ -18,9 +18,11 @@
 
             <div class="row">
 
-                <div class="col">
-                    <input id="searchInp" class="form-control mb-3" placeholder="search">
+                 <div class="col">
+        <input id="searchInp" class="form-control mb-3" placeholder="search">
+   
                 </div>
+                
 
                 <div class="col-6 text-end me-2">
 
@@ -29,9 +31,13 @@
                         <button id="refreshBtn" type="button" class="btn btn-primary">
                             <i class="fa-solid fa-refresh fa-fw"></i>
                         </button>
-                        <!-- <button id="filterBtn" type="button" class="btn btn-primary">
-                            <i class="fa-solid fa-filter fa-fw"></i>
-                        </button> -->
+                       
+
+                        <button id="filterBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+                            <i class="fa-solid fa-filter fa-fw"></i> Filter
+                          </button>
+                    
+                        
                         <button id="addBtn" type="button" class="btn btn-primary" type="button"
                             data-bs-toggle="offcanvas" data-bs-target="#addRecordModal"
                             aria-controls="staticBackdropOff">
@@ -43,6 +49,42 @@
                 </div>
 
             </div>
+
+            <!-- Filter Modal -->
+            <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="filterModalLabel">Filter Personnel</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+          <!-- Input for selecting department -->
+          <div class="form-group">
+            <label for="filterDepartment">Select Department</label>
+            <select id="filterDepartment" class="form-control">
+              <option value="">All Departments</option>
+              <!-- Add options dynamically from departments array if needed -->
+            </select>
+          </div>
+          <!-- Input for selecting location -->
+          <div class="form-group">
+            <label for="filterLocation">Select Location</label>
+            <select id="filterLocation" class="form-control">
+              <option value="">All Locations</option>
+              <!-- Add options dynamically from locations array if needed -->
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="applyFilterBtn">Apply Filter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -75,7 +117,7 @@
         <div class="tab-content bg-white">
 
             <div class="tab-pane show active" id="personnel-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                <table class="table table-hover" id="personalTable">
+                <table class="table table-hover" id="personnelTable">
                 </table>
             </div>
 
@@ -111,9 +153,9 @@
                 <div class="d-flex flex-column">
                     <hr>
                     <details>
-                        <summary>Personal Information</summary>
+                        <summary>Personnel Information</summary>
                         <div class="d-flex justify-content-center">
-                            <form action="./libs/php/personal.php" class="w-50 p-3" method="post">
+                            <form action="./libs/php/personnel.php" class="w-50 p-3" method="post">
                                 <input type="text" name="perid" value="0" hidden>
                                 <div class="form-group">
                                     <label>First name</label>
@@ -186,16 +228,16 @@
             </div>
         </div>
 
-        <div class="modal fade" id="editPersonalModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        <div class="modal fade" id="editPersonnelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Personal Information</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Personnel Information</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
-                    <form action="./libs/php/personal.php" class="p-3" method="post">
+                    <form action="./libs/php/personnel.php" class="p-3" method="post">
                         <div class="modal-body">
                             <input type="text" id="pid" name="perid" hidden>
                             <div class="form-group">
@@ -210,12 +252,12 @@
                             </div>
                             <div class="form-group">
                                 <label>Department</label>
-                                <select required name="department" id="personal-department" class="form-select">
+                                <select required name="department" id="personnel-department" class="form-select">
                                 </select>
                             </div>
                             <!-- <div class="form-group">
                                 <label>Location</label>
-                                <select required name="location" id="personal-location" class="form-select">
+                                <select required name="location" id="personnel-location" class="form-select">
                                 </select>
                             </div> -->
                             <div class="form-group">
@@ -289,7 +331,7 @@
             </div>
         </div>
 
-        <div class="modal fade" id="deletePersonalModal" data-bs-backdrop="static" data-bs-keyboard="false"
+        <div class="modal fade" id="deletePersonnelModal" data-bs-backdrop="static" data-bs-keyboard="false"
             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -297,7 +339,7 @@
                         <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Memeber</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="./libs/php/delPersonal.php" method="post">
+                    <form action="./libs/php/delPersonnel.php" method="post">
                         <div class="modal-body">
                             <p>Are you sure...!</p>
                             <input type="text" hidden class="form-control" name="pdelid" id="pdelid">
@@ -321,7 +363,8 @@
                     </div>
                     <form action="./libs/php/delDepartment.php" method="post">
                         <div class="modal-body">
-                            <p>Are you sure...!</p>
+                            <p>Are you sure you want to delete this department?</p>
+                            <p>Employees in this department: <span id="employeeCount">0</span></p> <!-- This is the placeholder for the employee count -->
                             <input type="text" class="form-control" hidden name="Ddelid" id="Ddelid">
                         </div>
                         <div class="modal-footer">
@@ -343,7 +386,8 @@
                     </div>
                     <form action="./libs/php/delLocation.php" method="post">
                         <div class="modal-body">
-                            <p>Are you sure...!</p>
+                            <p>Are you sure you want to delete this location?</p>
+                            <p>Departments in this location: <span id="departmentCount">0</span></p> <!-- This is the placeholder for the department count -->
                             <input type="text" class="form-control" hidden name="Ldelid" id="Ldelid">
                         </div>
                         <div class="modal-footer">
@@ -360,5 +404,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/js/bootstrap.min.js"></script>
 <script src="./libs/js/script.js"></script>
+
 
 </html>
