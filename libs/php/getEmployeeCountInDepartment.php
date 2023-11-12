@@ -1,13 +1,13 @@
 <?php
 // Include your database connection code here
-include_once("../includes/connect.php");
+include_once("../includes/db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['departmentId'])) {
-        $departmentId = $_POST['departmentId'];
+        $departmentId = mysqli_real_escape_string($connection, $_POST['departmentId']); // Sanitize the input
 
         // Perform a SQL query to count employees in the specified department
-        $query = "SELECT COUNT(id) AS employeeCount FROM employees WHERE department_id = $departmentId";
+        $query = "SELECT COUNT(id) FROM employees WHERE department_id = $departmentId";
 
         $result = mysqli_query($connection, $query);
 
