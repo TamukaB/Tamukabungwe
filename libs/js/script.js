@@ -2,14 +2,14 @@ let locations = [];
 let departments = [];
 
 $(document).ready(() => {
-    getPersonalData();
+    getPersonnelData();
     getLocationsData();
     getDepartmentsData();
 
     const searchParams = new URLSearchParams(window.location.search);
 
     if (searchParams.has('active')) {
-        if (searchParams.get('active') === 'personal') {
+        if (searchParams.get('active') === 'personnel') {
 
             $("#locationsBtn").removeClass("active");
             $("#departmentsBtn").removeClass("active");
@@ -43,26 +43,73 @@ $(document).ready(() => {
     }
 });
 
-$("#searchInp").on("keyup", function () {
+$("#filterBtn").click(function () {
+    // Get the filter criteria from the input field
 
-    var value = $(this).val().toLowerCase();
-    $("#personalTable tr").filter(function () {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    // Update the filter criteria in the filter personnel modal
+
+    // Update the "Select Department" dropdown options
+    var departmentDropdown = $("#filterModal #filterDepartment");
+    departmentDropdown.html(""); // Clear existing options
+
+    // Populate the "Select Department" dropdown with relevant options
+    $.each(departments, function () {
+        departmentDropdown.append(
+            $("<option>", {
+                value: this.id,
+                text: this.department,
+            })
+        );
+    });``
+
+    var locationDropdown = $("#filterModal #filterLocation");
+    locationDropdown.html(""); // Clear existing options
+
+    // Populate the "Select Location" dropdown with relevant options
+    $.each(locations, function () {
+        locationDropdown.append(
+            $("<option>", {
+                value: this.id,
+                text: this.name,
+            })
+        );
     });
-    $("#departmentTable tr").filter(function () {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-    $("#locationTable tr").filter(function () {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+
+    $("#applyFilterBtn").click(function () {
+        // Get the selected department and location values from the dropdowns
+        var selectedDepartmentId = $("#filterDepartment").val();
+        var selectedLocationId = $("#filterLocation").val();
+
+        $.ajax({
+            url: "./libs/php/filter_personnel.php", // Replace with the actual endpoint to fetch filtered data
+            type: 'POST',
+            data: {
+                departmentId: selectedDepartmentId,
+                locationId: selectedLocationId,
+            },
+            success: function (data) {
+                // Update the "personnelTable" with the filtered data
+                let response = JSON.parse(data);
+                loadPersonalData(response);
+            },
+            error: function () {
+                alert('Error: Unable to fetch filtered data.');
+            }
+
+        });
+
+        // Show the filter personnel modal
+        $("#filterModal").modal("show");
     });
 
 });
+
 
 $("#refreshBtn").click(function () {
 
     if ($("#personnelBtn").hasClass("active")) {
 
-        getPersonalData();
+        getPersonnelData();
 
     } else {
 
@@ -80,15 +127,10 @@ $("#refreshBtn").click(function () {
 
 });
 
-$("#filterBtn").click(function () {
-
-    // Open a modal of your own design that allows the user to apply a filter to the personnel table on either department or location
-
-});
 
 $("#personnelBtn").click(function () {
 
-    getPersonalData();
+    getPersonnelData();
 
 });
 
@@ -154,7 +196,7 @@ $("#editPersonnelModal").on("show.bs.modal", function (e) {
     });
 });
 
-function getPersonalData() {
+function getPersonnelData() {
     $.ajax({
         url: "./libs/php/api.php",
         type: "POST",
@@ -163,39 +205,43 @@ function getPersonalData() {
         },
         success: function (result) {
             let response = JSON.parse(result);
-            $("#personalTable").html("");
-            let html = '';
-            for (var i = 0; i < response.length; i++) {
-                html += `
-                        <tbody>
-                            <tr>
-                                <td class="align-middle text-nowrap">
-                                    ${response[i].firstName + ' ' + response[i].lastName}
-                                </td>
-                                <td class="align-middle text-nowrap d-none d-md-table-cell">
-                                    ${response[i].email}
-                                </td>
-                                <td class="align-middle text-nowrap d-none d-md-table-cell">
-                                    ${response[i].department}
-                                </td>
-                                <td class="align-middle text-nowrap d-none d-md-table-cell">
-                                    ${response[i].location}
-                                </td>
-                                <td class="text-end text-nowrap">
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonalModal" onclick="updatePersonalInfo('${response[i].id}','${response[i].firstName}','${response[i].lastName}','${response[i].departmentID}','${response[i].email}')">
-                                        <i class="fa-solid fa-pencil fa-fw"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-primary btn-sm deletePersonnelBtn" data-bs-toggle="modal" data-bs-target="#deletePersonalModal" onclick="deletePersonalInfo('${response[i].id}')">
-                                        <i class="fa-solid fa-trash fa-fw"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>`;
-            }
-            $('#personalTable').append(html);
+            loadPersonalData(response);
         },
         error: function (jqXHR, textStatus, errorThrown) { }
     });
+}
+
+function loadPersonalData(response) {
+    $("#personnelTable").html("");
+    let html = '';
+    for (var i = 0; i < response.length; i++) {
+        html += `
+                <tbody>
+                    <tr>
+                        <td class="align-middle text-nowrap">
+                            ${response[i].firstName + ' ' + response[i].lastName}
+                        </td>
+                        <td class="align-middle text-nowrap d-none d-md-table-cell">
+                            ${response[i].email}
+                        </td>
+                        <td class="align-middle text-nowrap d-none d-md-table-cell">
+                            ${response[i].department}
+                        </td>
+                        <td class="align-middle text-nowrap d-none d-md-table-cell">
+                            ${response[i].location}
+                        </td>
+                        <td class="text-end text-nowrap">
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editPersonnelModal" onclick="updatePersonnelInfo('${response[i].id}','${response[i].firstName}','${response[i].lastName}','${response[i].departmentID}','${response[i].email}')">
+                                <i class="fa-solid fa-pencil fa-fw"></i>
+                            </button>
+                            <button type="button" class="btn btn-primary btn-sm deletePersonnelBtn" data-bs-toggle="modal" data-bs-target="#deletePersonnelModal" onclick="deletePersonnelInfo('${response[i].id}')">
+                                <i class="fa-solid fa-trash fa-fw"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>`;
+    }
+    $('#personnelTable').append(html);
 }
 
 function getDepartmentsData() {
@@ -228,7 +274,7 @@ function getDepartmentsData() {
                                         <i class="fa-solid fa-pencil fa-fw"></i>
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm deleteDepartmentBtnr"
-                                        data-bs-toggle="modal" onclick="deleteDepartmentInfo('${response[i].id}')"
+                                        data-bs-toggle="modal" onclick="deleteDepartmentInfo('${response[i].id}','${response[i].empCount}')"
                                         data-bs-target="#deleteDepartmentModal">
                                         <i class="fa-solid fa-trash fa-fw"></i>
                                     </button>
@@ -270,7 +316,7 @@ function getLocationsData() {
                                         <i class="fa-solid fa-pencil fa-fw"></i>
                                     </button>
                                     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                        onclick="deleteLocationInfo('${response[i].id}')"
+                                        onclick="deleteLocationInfo('${response[i].id}','${response[i].empCount}')"
                                         data-bs-target="#deleteLocationModal">
                                         <i class="fa-solid fa-trash fa-fw"></i>
                                     </button>
@@ -284,12 +330,12 @@ function getLocationsData() {
     });
 }
 
-function updatePersonalInfo(Id, Fname, Lname, Department, Email) {
-    fillLocationDropdown('personal-location');
-    fillDepartmentDropdown('personal-department');
+function updatePersonnelInfo(Id, Fname, Lname, Department, Email) {
+    fillLocationDropdown('personnel-location');
+    fillDepartmentDropdown('personnel-department');
     $("#fname").val(Fname);
     $("#lname").val(Lname);
-    $("#personal-department").val(Department);
+    $("#personnel-department").val(Department);
     $("#email").val(Email);
     $("#pid").val(Id);
 }
@@ -331,14 +377,69 @@ function updateLocationInfo(Id, City) {
     $("#loccity").val(City);
 }
 
-function deletePersonalInfo(Id) {
+function deletePersonnelInfo(Id) {
     $("#pdelid").val(Id);
 }
 
-function deleteDepartmentInfo(Id) {
+function deleteDepartmentInfo(Id, empCount) {
     $("#Ddelid").val(Id);
+    $("#employeeCount").text(empCount);
 }
 
-function deleteLocationInfo(Id) {
+function deleteLocationInfo(Id, empCount) {
     $("#Ldelid").val(Id);
+    $("#departmentCount").text(empCount);
 }
+
+// ... (previous code)
+
+// Attach click event listener to delete department button
+$('.deleteDepartmentBtn').click(function () {
+    var departmentId = $(this).data('departmentId');
+
+    // Call the function to get the department count and update the modal
+    getEmployeeCountInDepartment(departmentId);
+});
+
+// Attach click event listener to delete location button
+$('.deleteLocationBtn').click(function () {
+    var locationId = $(this).data('locationid');
+
+    // Call the function to get the employee count and update the modal
+    getDepartmentCountInLocation(locationId);
+});
+
+// Function to get the count of employees in a department
+function getEmployeeCountInDepartment(departmentId) {
+    $.ajax({
+        url: './libs/php/getEmployeeCountInDepartment.php', // Replace with the actual PHP routine URL
+        type: 'POST',
+        data: { departmentId: departmentId },
+        success: function (response) {
+            // Display the count in the modal
+            $('#employeeCount').text(response); // Assuming you have an element with id 'employeeCount' in your modal
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error('Error getting employee count:', errorThrown);
+        }
+    });
+}
+
+// Function to get the count of departments in a location
+function getDepartmentCountInLocation(locationId) {
+    $.ajax({
+        url: './libs/php/getDepartmentCountInLocation.php', // Replace with the actual PHP routine URL
+        type: 'POST',
+        data: { locationId: locationId },
+        success: function (response) {
+            // Display the count in the modal
+            $('#departmentCount').text(response); // Assuming you have an element with id 'departmentCount' in your modal
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error('Error getting department count:', errorThrown);
+        }
+    });
+}
+
+
+
