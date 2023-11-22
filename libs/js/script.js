@@ -52,6 +52,13 @@ $("#filterBtn").click(function () {
     var departmentDropdown = $("#filterModal #filterDepartment");
     departmentDropdown.html(""); // Clear existing options
 
+    departmentDropdown.append(
+        $("<option>", {
+            value: "",
+            text: "All Departments",
+        })
+    );
+
     // Populate the "Select Department" dropdown with relevant options
     $.each(departments, function () {
         departmentDropdown.append(
@@ -60,10 +67,17 @@ $("#filterBtn").click(function () {
                 text: this.department,
             })
         );
-    });``
+    }); ``
 
     var locationDropdown = $("#filterModal #filterLocation");
     locationDropdown.html(""); // Clear existing options
+
+    locationDropdown.append(
+        $("<option>", {
+            value: "",
+            text: "All Locations",
+        })
+    );
 
     // Populate the "Select Location" dropdown with relevant options
     $.each(locations, function () {
@@ -127,6 +141,20 @@ $("#refreshBtn").click(function () {
 
 });
 
+$("#addBtn").click(function () {
+
+    if ($('#personnelBtn').hasClass('active')) {
+        $('#addPersonnelModal').offcanvas('show');
+    }
+
+    if ($('#departmentsBtn').hasClass('active')) {
+        $('#addDepartmentModal').offcanvas('show');
+    }
+
+    if ($('#locationsBtn').hasClass('active')) {
+        $('#addLocationModal').offcanvas('show');
+    }
+});
 
 $("#personnelBtn").click(function () {
 
@@ -143,6 +171,70 @@ $("#departmentsBtn").click(function () {
 $("#locationsBtn").click(function () {
 
     getLocationsData();
+
+});
+
+$("#deleteDptBtn").click(function () {
+
+    let employeeCount = Number($('#employeeCount')[0].innerHTML);
+
+    if (employeeCount > 0) {
+        alert("You cannot delete this department as it's has " + employeeCount + " employees");
+    }
+
+    $.ajax({
+        url: "./libs/php/delDepartment.php",
+        type: "POST",
+        data: { Ddelid: $('#Ddelid')[0].value },
+        success: function (result) {
+            var resultCode = result.status.code;
+
+            if (resultCode == 200) {
+                $('#deleteDepartmentModal').modal('hide');
+            } else {
+                $("#editPersonnelModal .modal-title").replaceWith(
+                    "Error retrieving data"
+                );
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $("#editPersonnelModal .modal-title").replaceWith(
+                "Error retrieving data"
+            );
+        }
+    });
+
+});
+
+$("#deleteLocationModal").click(function () {
+
+    let departmentCount = Number($('#departmentCount')[0].innerHTML);
+
+    if (departmentCount > 0) {
+        alert("You cannot delete this location as it's has " + departmentCount + " departments");
+    }
+
+    $.ajax({
+        url: "./libs/php/delLocation.php",
+        type: "POST",
+        data: { Ldelid: $('#Ldelid')[0].value },
+        success: function (result) {
+            var resultCode = result.status.code;
+
+            if (resultCode == 200) {
+                $('#deleteDepartmentModal').modal('hide');
+            } else {
+                $("#editPersonnelModal .modal-title").replaceWith(
+                    "Error retrieving data"
+                );
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $("#editPersonnelModal .modal-title").replaceWith(
+                "Error retrieving data"
+            );
+        }
+    });
 
 });
 
@@ -193,6 +285,19 @@ $("#editPersonnelModal").on("show.bs.modal", function (e) {
                 "Error retrieving data"
             );
         }
+    });
+});
+
+$("#searchInp").on("keyup", function () {
+    var value = $(this).val().toLowerCase();
+    $("#personnelTable tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+    $("#departmentTable tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+    $("#locationTable tr").filter(function () {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
 });
 
