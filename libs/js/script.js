@@ -104,7 +104,7 @@ $("#filterBtn").click(function () {
             success: function (data) {
                 // Update the "personnelTable" with the filtered data
                 let response = JSON.parse(data);
-                loadPersonalData(response);
+                loadPersonnelData(response);
             },
             error: function () {
                 alert('Error: Unable to fetch filtered data.');
@@ -310,13 +310,13 @@ function getPersonnelData() {
         },
         success: function (result) {
             let response = JSON.parse(result);
-            loadPersonalData(response);
+            loadPersonnelData(response);
         },
         error: function (jqXHR, textStatus, errorThrown) { }
     });
 }
 
-function loadPersonalData(response) {
+function loadPersonnelData(response) {
     $("#personnelTable").html("");
     let html = '';
     for (var i = 0; i < response.length; i++) {
