@@ -38,9 +38,7 @@
                           </button>
                     
                         
-                        <button id="addBtn" type="button" class="btn btn-primary" type="button"
-                            data-bs-toggle="offcanvas" data-bs-target="#addRecordModal"
-                            aria-controls="staticBackdropOff">
+                        <button id="addBtn" type="button" class="btn btn-primary" type="button">
                             <i class="fa-solid fa-plus fa-fw"></i>
                         </button>
 
@@ -143,7 +141,7 @@
 
         <!-- Modals -->
 
-        <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="addRecordModal"
+        <!-- <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="addRecordModal"
             aria-labelledby="staticBackdropLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="staticBackdropLabel">Add Information</h5>
@@ -171,11 +169,6 @@
                                     <select required name="department" id="addinfo-department" class="form-select">
                                     </select>
                                 </div>
-                                <!-- <div class="form-group">
-                                    <label>Location</label>
-                                    <select required name="location" id="addinfo-location" class="form-select">
-                                    </select>
-                                </div> -->
                                 <div class="form-group">
                                     <label>Email</label>
                                     <input required type="email" name="email" class="form-control">
@@ -226,7 +219,96 @@
                         else.</small>
                 </div>
             </div>
+        </div> -->
+
+        <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="addPersonnelModal"
+            aria-labelledby="staticBackdropLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="staticBackdropLabel">Add Personnel Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <form action="./libs/php/personnel.php" class="w-50 p-3" method="post">
+                <input type="text" name="perid" value="0" hidden>
+                <div class="form-group">
+                    <label>First name</label>
+                    <input type="text" required class="form-control" name="fname"
+                        aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <label>Last name</label>
+                    <input type="text" required name="lname" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Department</label>
+                    <select required name="department" id="addinfo-department" class="form-select">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input required type="email" name="email" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary mt-4">Submit</button>
+            </form>
         </div>
+
+        <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="addDepartmentModal"
+            aria-labelledby="staticBackdropLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="staticBackdropLabel">Add Department Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <form action="./libs/php/department.php" class="w-50 p-3" method="post">
+                <input type="text" name="depid" value="0" hidden>
+                <div class="form-group">
+                    <label>Department name</label>
+                    <input type="text" class="form-control" aria-describedby="emailHelp" name="name"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label>Location</label>
+                    <select required name="location" id="adddepartment-location" class="form-select">
+                    </select>
+                </div>
+                <button type="submit" class="btn mt-3 btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="addLocationModal"
+            aria-labelledby="staticBackdropLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="staticBackdropLabel">Add Location Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <form action="./libs/php/location.php" class="w-50 p-3" method="post">
+                <input type="text" name="locid" value="0" hidden>
+                <div class="form-group">
+                    <label>City</label>
+                    <input type="text" name="city" required class="form-control" i
+                        aria-describedby="emailHelp">
+                </div>
+                <button type="submit" class="btn mt-3 btn-primary">Submit</button>
+            </form>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id="addPersonnelModal">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
         <div class="modal fade" id="editPersonnelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -361,7 +443,7 @@
                         <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Department</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="./libs/php/delDepartment.php" method="post">
+                    <!-- <form action="./libs/php/delDepartment.php" method="post"> -->
                         <div class="modal-body">
                             <p>Are you sure you want to delete this department?</p>
                             <p>Employees in this department: <span id="employeeCount">0</span></p> <!-- This is the placeholder for the employee count -->
@@ -369,9 +451,9 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="SUBMIT" class="btn btn-danger">Delete</button>
+                            <button type="button" id="deleteDptBtn" class="btn btn-danger">Delete</button>
                         </div>
-                    </form>
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
@@ -384,7 +466,7 @@
                         <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Location</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="./libs/php/delLocation.php" method="post">
+                    <!-- <form action="./libs/php/delLocation.php" method="post"> -->
                         <div class="modal-body">
                             <p>Are you sure you want to delete this location?</p>
                             <p>Departments in this location: <span id="departmentCount">0</span></p> <!-- This is the placeholder for the department count -->
@@ -392,9 +474,9 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="SUBMIT" class="btn btn-danger">Delete</button>
+                            <button type="button" id="deleteLocBtn" class="btn btn-danger">Delete</button>
                         </div>
-                    </form>
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
