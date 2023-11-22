@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $sql = "UPDATE personnel SET firstName='$fname', lastName='$lname', email='$email', departmentID='$dep' WHERE Id=$id";
         mysqli_query($db_config, $sql);
-        header('Location: ../../index.html?active=personal');
+        header('Location: ../../index.html?active=personnel');
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
     }
@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     try {
         $sql = "INSERT INTO personnel(firstName, lastName, email, departmentID) VALUES ('$fname','$lname','$email','$dep')";
         mysqli_query($db_config, $sql);
-        header('Location: ../../index.html?active=personal');
+        header('Location: ../../index.html?active=personnel');
     } catch (PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
     }
