@@ -175,12 +175,17 @@ $("#locationsBtn").click(function () {
 });
 
 $("#deleteDptBtn").click(function () {
-
     let employeeCount = Number($('#employeeCount')[0].innerHTML);
 
     if (employeeCount > 0) {
-        alert("You cannot delete this department as it's has " + employeeCount + " employees");
+        // Display a warning using a Bootstrap modal
+        $('#deleteDepartmentWarningModal').modal('show');
+    } else {
+        // Proceed with the department deletion
+        performDepartmentDeletion();
     }
+
+
 
     $.ajax({
         url: "./libs/php/delDepartment.php",
@@ -207,12 +212,17 @@ $("#deleteDptBtn").click(function () {
 });
 
 $("#deleteLocationModal").click(function () {
-
     let departmentCount = Number($('#departmentCount')[0].innerHTML);
 
     if (departmentCount > 0) {
-        alert("You cannot delete this location as it's has " + departmentCount + " departments");
+        // Display a warning using a Bootstrap modal
+        $('#deleteLocationWarningModal').modal('show');
+    } else {
+        // Proceed with the location deletion
+        performLocationDeletion();
     }
+
+
 
     $.ajax({
         url: "./libs/php/delLocation.php",
