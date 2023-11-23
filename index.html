@@ -458,6 +458,24 @@
             </div>
         </div>
 
+        <div class="modal fade" id="deleteDepartmentWarningModal" tabindex="-1" aria-labelledby="deleteDepartmentWarningModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteDepartmentWarningModalLabel">Warning!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        You cannot delete this department as it has <span id="employeeCountWarning"></span> employees.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
         <div class="modal fade" id="deleteLocationModal" data-bs-backdrop="static" data-bs-keyboard="false"
             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -480,6 +498,24 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="deleteLocationWarningModal" tabindex="-1" aria-labelledby="deleteLocationWarningModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteLocationWarningModalLabel">Warning!</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        You cannot delete this location as it has <span id="departmentCountWarning"></span> departments.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </section>
 </body>
 
