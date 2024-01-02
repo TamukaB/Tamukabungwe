@@ -5,85 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Directory</title>
-    <link rel="icon" type="image/x-icon" href="./libs/libs/images/logo.png" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="./libs/css/style.css">
+    <link rel="icon" type="image/png" href="img/favicon.png">
 </head>
 
 <body>
     <section>
-
         <div class="appHeader">
-
             <div class="row">
-
-                 <div class="col">
-        <input id="searchInp" class="form-control mb-3" placeholder="search">
-   
+                <div class="col">
+                    <input id="searchInp" class="form-control mb-3" placeholder="search">
                 </div>
-                
-
                 <div class="col-6 text-end me-2">
-
                     <div class="btn-group" role="group" aria-label="buttons">
-
                         <button id="refreshBtn" type="button" class="btn btn-primary">
                             <i class="fa-solid fa-refresh fa-fw"></i>
                         </button>
-                       
-
-                        <button id="filterBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
-                            <i class="fa-solid fa-filter fa-fw"></i> Filter
-                          </button>
-                    
-                        
+                        <button id="filterBtn" type="button" class="btn btn-primary">
+                            <i class="fa-solid fa-filter fa-fw"></i>
+                        </button>
                         <button id="addBtn" type="button" class="btn btn-primary" type="button">
                             <i class="fa-solid fa-plus fa-fw"></i>
                         </button>
-
                     </div>
-
                 </div>
-
             </div>
-
-            <!-- Filter Modal -->
-            <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="filterModalLabel">Filter Personnel</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        
-          <!-- Input for selecting department -->
-          <div class="form-group">
-            <label for="filterDepartment">Select Department</label>
-            <select id="filterDepartment" class="form-control">
-              <option value="">All Departments</option>
-              <!-- Add options dynamically from departments array if needed -->
-            </select>
-          </div>
-          <!-- Input for selecting location -->
-          <div class="form-group">
-            <label for="filterLocation">Select Location</label>
-            <select id="filterLocation" class="form-control">
-              <option value="">All Locations</option>
-              <!-- Add options dynamically from locations array if needed -->
-            </select>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="applyFilterBtn">Apply Filter</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="personnelBtn" data-bs-toggle="tab"
@@ -109,419 +57,384 @@
                 </li>
 
             </ul>
-
         </div>
-
         <div class="tab-content bg-white">
-
-            <div class="tab-pane show active" id="personnel-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-                <table class="table table-hover" id="personnelTable">
-                </table>
+            <div class="tab-pane show active" id="personnel-tab-pane" role="tabpanel" aria-labelledby="home-tab"
+                tabindex="0">
+                <table class="table table-hover" id="personnelTable"></table>
             </div>
-
             <div class="tab-pane" id="departments-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                <table class="table table-hover" id="departmentTable">
-
-                </table>
+                <table class="table table-hover" id="departmentTable"></table>
             </div>
-
             <div class="tab-pane" id="locations-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-                <table class="table table-hover" id="locationTable">
-
-                </table>
+                <table class="table table-hover" id="locationTable"></table>
             </div>
-
         </div>
-
         <footer class="border-top text-center fw-bold">
-
             <p class="fw-light my-3">Company Directory version 1.0</p>
-
         </footer>
-
-        <!-- Modals -->
-
-        <!-- <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="addRecordModal"
-            aria-labelledby="staticBackdropLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="staticBackdropLabel">Add Information</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </section>
+    <!-- Personal Filter -->
+    <div class="modal fade" id="filterPersonnelModal" tabindex="-1" role="dialog"
+    aria-labelledby="filterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content shadow">
+            <div class="modal-header bg-primary bg-gradient text-white">
+                <h5 class="modal-title">Filter Employees</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
-            <div class="offcanvas-body">
-                <div class="d-flex flex-column">
-                    <hr>
-                    <details>
-                        <summary>Personnel Information</summary>
-                        <div class="d-flex justify-content-center">
-                            <form action="./libs/php/personnel.php" class="w-50 p-3" method="post">
-                                <input type="text" name="perid" value="0" hidden>
-                                <div class="form-group">
-                                    <label>First name</label>
-                                    <input type="text" required class="form-control" name="fname"
-                                        aria-describedby="emailHelp">
-                                </div>
-                                <div class="form-group">
-                                    <label>Last name</label>
-                                    <input type="text" required name="lname" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Department</label>
-                                    <select required name="department" id="addinfo-department" class="form-select">
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input required type="email" name="email" class="form-control">
-                                </div>
-                                <button type="submit" class="btn btn-primary mt-4">Submit</button>
-                            </form>
-                        </div>
-                    </details>
-                    <hr>
-                    <details>
-                        <summary>Department Information</summary>
-                        <div class="d-flex justify-content-center">
-                            <form action="./libs/php/department.php" class="w-50 p-3" method="post">
-                                <input type="text" name="depid" value="0" hidden>
-                                <div class="form-group">
-                                    <label>Department name</label>
-                                    <input type="text" class="form-control" aria-describedby="emailHelp" name="name"
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Location</label>
-                                    <select required name="location" id="adddepartment-location" class="form-select">
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn mt-3 btn-primary">Submit</button>
-                            </form>
-                        </div>
-                    </details>
-                    <hr>
-                    <details>
-                        <summary>Location Information</summary>
-                        <div class="d-flex justify-content-center">
-                            <form action="./libs/php/location.php" class="w-50 p-3" method="post">
-                                <input type="text" name="locid" value="0" hidden>
-                                <div class="form-group">
-                                    <label>City</label>
-                                    <input type="text" name="city" required class="form-control" i
-                                        aria-describedby="emailHelp">
-                                </div>
-                                <button type="submit" class="btn mt-3 btn-primary">Submit</button>
-                            </form>
-                        </div>
-                    </details>
-                    <hr>
-                    <small id="emailHelp" class="form-text text-center text-muted">We'll never share your information
-                        with
-                        anyone
-                        else.</small>
-                </div>
-            </div>
-        </div> -->
-
-        <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="addPersonnelModal"
-            aria-labelledby="staticBackdropLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="staticBackdropLabel">Add Personnel Information</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <form action="./libs/php/personnel.php" class="w-50 p-3" method="post">
-                <input type="text" name="perid" value="0" hidden>
-                <div class="form-group">
-                    <label>First name</label>
-                    <input type="text" required class="form-control" name="fname"
-                        aria-describedby="emailHelp">
-                </div>
-                <div class="form-group">
-                    <label>Last name</label>
-                    <input type="text" required name="lname" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Department</label>
-                    <select required name="department" id="addinfo-department" class="form-select">
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <select class="form-select" id="filterPersonnelByDepartment"
+                        placeholder="Department">
+                        <option value="">All</option>
                     </select>
+                    <label for="filterPersonnelByDepartment">Department</label>
                 </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input required type="email" name="email" class="form-control">
-                </div>
-                <button type="submit" class="btn btn-primary mt-4">Submit</button>
-            </form>
-        </div>
-
-        <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="addDepartmentModal"
-            aria-labelledby="staticBackdropLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="staticBackdropLabel">Add Department Information</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <form action="./libs/php/department.php" class="w-50 p-3" method="post">
-                <input type="text" name="depid" value="0" hidden>
-                <div class="form-group">
-                    <label>Department name</label>
-                    <input type="text" class="form-control" aria-describedby="emailHelp" name="name"
-                        required>
-                </div>
-                <div class="form-group">
-                    <label>Location</label>
-                    <select required name="location" id="adddepartment-location" class="form-select">
+                <div class="form-floating">
+                    <select class="form-select" id="filterPersonnelByLocation"
+                        placeholder="Location">
+                        <option value="">All</option>
                     </select>
+                    <label for="filterPersonnelByLocation">Location</label>
                 </div>
-                <button type="submit" class="btn mt-3 btn-primary">Submit</button>
-            </form>
-        </div>
-
-        <div class="offcanvas offcanvas-start w-50" tabindex="-1" id="addLocationModal"
-            aria-labelledby="staticBackdropLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="staticBackdropLabel">Add Location Information</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <form action="./libs/php/location.php" class="w-50 p-3" method="post">
-                <input type="text" name="locid" value="0" hidden>
-                <div class="form-group">
-                    <label>City</label>
-                    <input type="text" name="city" required class="form-control" i
-                        aria-describedby="emailHelp">
-                </div>
-                <button type="submit" class="btn mt-3 btn-primary">Submit</button>
-            </form>
         </div>
-
-        <div class="modal" tabindex="-1" role="dialog" id="addPersonnelModal">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+    </div>
+    </div>
+    <!-- Department Filter -->
+    <div class="modal fade" id="filterDepartmentModal" tabindex="-1" role="dialog"
+        aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content shadow">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h5 class="modal-title">Filter Department</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <p>Modal body text goes here.</p>
+                    <!-- <div class="form-floating mb-3">
+                        <select class="form-select personal-grouped-input" id="filterPersonnelByDepartment" placeholder="Department">
+                            <option value="">All</option>
+                        </select>
+                        <label for="filterPersonnelByDepartment">Department</label>
+                    </div> -->
+                    <div class="form-floating">
+                        <select class="form-select personal-grouped-input" id="filterDepartmentByLocation"
+                            placeholder="Location">
+                            <option value="">All</option>
+                        </select>
+                        <label for="filterDepartmentByLocation">Location</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="addPersonnelModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content shadow">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h5 class="modal-title">Add Personnel</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form id="insertPersonal" class="insertPersonal form" method="post">
+                    <div class="modal-body">
+                        <input type="text" name="perid" value="0" hidden>
+                        <div class="form-floating mb-3">
+                            <input type="text" required class="form-control" name="fname" aria-describedby="emailHelp">
+                            <label>First name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" required name="lname" class="form-control">
+                            <label>Last name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select required name="department" id="addinfo-department"
+                                class="form-select addinfo-department">
+                            </select>
+                            <label>Department</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input required type="email" name="email" class="form-control">
+                            <label>Email</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm myBtn"
+                            data-bs-dismiss="modal">CANCEL</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="addDepartmentModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content shadow">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h5 class="modal-title">Add Department</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form id="addDepartment" class="p-3 addDepartment" method="post">
+                    <div class="modal-body">
+                        <input type="text" name="depid" value="0" hidden>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" aria-describedby="emailHelp" name="name" required>
+                            <label>Department name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select required name="location" id="adddepartment-location"
+                                class="form-select adddepartment-location">
+                            </select>
+                            <label>Location</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm myBtn"
+                            data-bs-dismiss="modal">CANCEL</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="addLocationModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content shadow">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h5 class="modal-title">Add Location</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form id="addlocationForm" class="p-3 addlocationForm" method="post">
+                    <div class="modal-body">
+                        <input type="text" name="locid" value="0" hidden>
+                        <div class="form-floating mb-3">
+                            <input type="text" name="city" required class="form-control" i aria-describedby="emailHelp">
+                            <label>City</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm myBtn"
+                            data-bs-dismiss="modal">CANCEL</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="editPersonnelModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content shadow">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h5 class="modal-title">Edit employee</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editPersonnelFormm" class="insertPersonal">
+                        <input type="hidden" id="editPersonnelEmployeeID" name="perid">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="fname" id="editPersonnelFirstName"
+                                placeholder="First name" required>
+                            <label for="editPersonnelFirstName">First name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" name="lname" id="editPersonnelLastName"
+                                placeholder="Last name" required>
+                            <label for="editPersonnelLastName">Last name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" name="email" id="editPersonnelEmailAddress"
+                                placeholder="Email Address" required>
+                            <label for="editPersonnelEmailAddress">Email Address</label>
+                        </div>
+                        <div class="form-floating">
+                            <select class="form-select addinfo-department" name="department"
+                                id="editPersonnelDepartment"></select>
+                            <label for="editPersonnelDepartment">Department</label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
+                            <button type="button" class="btn btn-outline-primary btn-sm myBtn"
+                                data-bs-dismiss="modal">CANCEL</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="updateDepartmentModal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="updateDepartmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content shadow">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h5 class="modal-title">Edit Department</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form id="updateDepartmentFormm" class="addDepartment">
+                    <input type="hidden" id="updateDepartmentID" name="depid">
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="updateDepartmentName" name="name"
+                                placeholder="Department Name" required>
+                            <label for="updateDepartmentName">Department Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select class="form-select adddepartment-location" id="updateDepartmentLocation"
+                                name="location" placeholder="Location"></select>
+                            <label for="updateDepartmentLocation">Location</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-primary btn-sm myBtn">SAVE</button>
+                        <button type="button" class="btn btn-outline-primary btn-sm myBtn"
+                            data-bs-dismiss="modal">CANCEL</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="updateLocationModal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="updateLocationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content shadow">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h5 class="modal-title">Edit Location</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form id="updateLocationFormm" action="./libs/php/location.php" class="p-3 addlocationForm"
+                    method="post">
+                    <div class="modal-body">
+                        <input type="text" id="updateLocationID" name="locid" hidden>
+                        <div class="form-floating mb-3">
+                            <input type="text" id="updateLocationCity" required class="form-control" name="city"
+                                aria-describedby="emailHelp">
+                            <label for="updateLocationCity">City</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="deletePersonnelModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Member</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure that you want to remove the entry for <span id="areYouSurePersonnelName"
+                            class="fw-bold"></span>?</p>
+                    <input type="text" hidden class="form-control" name="pdelid" id="pdelid">
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        <div class="modal fade" id="editPersonnelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Personnel Information</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <form action="./libs/php/personnel.php" class="p-3" method="post">
-                        <div class="modal-body">
-                            <input type="text" id="pid" name="perid" hidden>
-                            <div class="form-group">
-                                <label>First name</label>
-                                <input type="text" id="fname" required class="form-control" name="fname"
-                                    aria-describedby="emailHelp">
-
-                            </div>
-                            <div class="form-group">
-                                <label>Last name</label>
-                                <input type="text" required id="lname" name="lname" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Department</label>
-                                <select required name="department" id="personnel-department" class="form-select">
-                                </select>
-                            </div>
-                            <!-- <div class="form-group">
-                                <label>Location</label>
-                                <select required name="location" id="personnel-location" class="form-select">
-                                </select>
-                            </div> -->
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input required type="email" name="email" id="email" class="form-control">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
-                    </form>
+                    <button type="button" id="deletePersonalBtn" class="btn btn-outline-secondary btn-sm myBtn">Yes</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm myBtn"
+                        data-bs-dismiss="modal">No</button>
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="updateDepartmentModal" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Department Information</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="./libs/php/department.php" class="p-3" method="post">
-                        <div class="modal-body">
-                            <input type="text" id="did" name="depid" hidden>
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" id="name" required class="form-control" name="name"
-                                    aria-describedby="emailHelp">
-                            </div>
-                            <div class="form-group">
-                                <label>Location</label>
-                                <select required name="location" id="location-department" class="form-select">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
-                    </form>
+    </div>
+    <div id="deleteDepartmentModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Remove department?</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure that you want to remove the entry for <b><span
+                                id="deleteDepartmentName"></span></b>?</p>
+                    <input type="text" class="form-control" hidden name="Ddelid" id="Ddelid">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="deleteDptBtn" class="btn btn-outline-secondary btn-sm">Yes</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">No</button>
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="updateLocationModal" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Location Information</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="./libs/php/location.php" class="p-3" method="post">
-                        <div class="modal-body">
-                            <input type="text" id="lid" name="locid" hidden>
-                            <div class="form-group">
-                                <label>City</label>
-                                <input type="text" required class="form-control" id="loccity" name="city"
-                                    aria-describedby="emailHelp">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Update</button>
-                        </div>
-                    </form>
+    </div>
+    <div id="deleteDepartmentWarningModal" class="modal fade" tabindex="-1" data-bs-backdrop="false"
+        data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Cannot remove department ...</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    You cannot remove the entry for <b><span id="warnignDptName"></span></b> because it has <b><span
+                            id="departmentEmpCount"></span></b> employees assigned to it.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="deletePersonnelModal" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Memeber</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="./libs/php/delPersonnel.php" method="post">
-                        <div class="modal-body">
-                            <p>Are you sure...!</p>
-                            <input type="text" hidden class="form-control" name="pdelid" id="pdelid">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="SUBMIT" class="btn btn-danger">Delete</button>
-                        </div>
-                    </form>
+    </div>
+    <div id="deleteLocationModal" class="modal fade" tabindex="-1" data-bs-backdrop="false" data-bs-keyboard="false"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h1 class="modal-title fs-5" id="">Remove location?</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure that you want to remove the entry for <b><span id="deleteLocationName"></span></b>?
+                    </p>
+                    <input type="text" class="form-control" hidden name="Ldelid" id="Ldelid">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">No</button>
+                    <button type="button" id="deleteLocBtn" class="btn btn-outline-secondary btn-sm">Yes</button>
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="deleteDepartmentModal" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Department</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <!-- <form action="./libs/php/delDepartment.php" method="post"> -->
-                        <div class="modal-body">
-                            <p>Are you sure you want to delete this department?</p>
-                            <p>Employees in this department: <span id="employeeCount">0</span></p> <!-- This is the placeholder for the employee count -->
-                            <input type="text" class="form-control" hidden name="Ddelid" id="Ddelid">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" id="deleteDptBtn" class="btn btn-danger">Delete</button>
-                        </div>
-                    <!-- </form> -->
+    </div>
+    <div id="deleteLocationWarningModal" class="modal fade" tabindex="-1" data-bs-backdrop="false"
+        data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-primary bg-gradient text-white">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Cannot remove location ...</h1>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    You cannot remove the entry for because it has <b><span
+                            id="locationDepartmentCountWarning"></span></b> departments assigned to it.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
-
-        <div class="modal fade" id="deleteDepartmentWarningModal" tabindex="-1" aria-labelledby="deleteDepartmentWarningModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteDepartmentWarningModalLabel">Warning!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        You cannot delete this department as it has <span id="employeeCountWarning"></span> employees.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-
-        <div class="modal fade" id="deleteLocationModal" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Delete Location</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <!-- <form action="./libs/php/delLocation.php" method="post"> -->
-                        <div class="modal-body">
-                            <p>Are you sure you want to delete this location?</p>
-                            <p>Departments in this location: <span id="departmentCount">0</span></p> <!-- This is the placeholder for the department count -->
-                            <input type="text" class="form-control" hidden name="Ldelid" id="Ldelid">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" id="deleteLocBtn" class="btn btn-danger">Delete</button>
-                        </div>
-                    <!-- </form> -->
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="deleteLocationWarningModal" tabindex="-1" aria-labelledby="deleteLocationWarningModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteLocationWarningModalLabel">Warning!</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        You cannot delete this location as it has <span id="departmentCountWarning"></span> departments.
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    </section>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/js/bootstrap.min.js"></script>
+    <script src="./libs/js/script.js"></script>
 </body>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/js/bootstrap.min.js"></script>
-<script src="./libs/js/script.js"></script>
-
 
 </html>
